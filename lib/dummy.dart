@@ -1,61 +1,67 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
-import 'package:spotify/dashboard.dart';
-import 'package:spotify/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:splachscreen/Signup.dart';
+import 'package:spotify/alpha.dart';
+import 'package:spotify/login.dart';
+
 
 void main() {
-  runApp(const Signup());
+  runApp(const Dummy());
 }
 
-class Signup extends StatelessWidget {
-  const Signup({super.key});
-
-  // This widget is the root of your application.
+class Dummy extends StatelessWidget {
+  const Dummy({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp();
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+       
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
   }
 }
 
-class MySignupPage extends StatefulWidget {
-  const MySignupPage({super.key, required this.title});
-
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
   final String title;
 
   @override
-  State<MySignupPage> createState() => _MySignupPageState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MySignupPageState extends State<MySignupPage> {
-  String getName = "";
-  String getemail = "";
-  String getpassword = "";
+class _MyHomePageState extends State<MyHomePage> {
+  // void initState() {
+  //   super.initState();
+  //   a();
+  //   print("Dummy");
+  
+  // }
 
-  void saveCredentials() async{
-    final SharedPreferences userData =await  SharedPreferences.getInstance();
-    setState(() {
-      userData.setString('name', getName);
-      userData.setString('email', getemail);
-      userData.setString('password', getpassword);
-      Navigator.push(context,MaterialPageRoute(builder: (a)=>Login()));
-    });
-  }
 
-  void initState() {
-    print("vdfvgdfgdfg");
 
-    // TODO: implement initState
-    super.initState();
-  }
+// void a() async{
+//      final SharedPreferences userData =await  SharedPreferences.getInstance();
+//      if (userData.containsKey("name")) {
+//        Navigator.push(context, MaterialPageRoute(builder: 
+//        (a)=>alpha()));
+//      }
+//      else{
+//      userData.setString("name", "Ahmed");
+
+//      }
+
+
+// }
+  
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -74,7 +80,7 @@ class _MySignupPageState extends State<MySignupPage> {
                           BorderRadius.circular(6.0), // Rounded corners
                     ),
                   ),
-                  onChanged: (value) => setState(() => getName = value),
+                  // onChanged: (value) => setState(() => getName = value),
                 ),
               ),
               SizedBox(height: 22.0), // Add space between the fields
@@ -90,7 +96,7 @@ class _MySignupPageState extends State<MySignupPage> {
                           BorderRadius.circular(6.0), // Rounded corners
                     ),
                   ),
-                  onChanged: (value) => setState(() => getemail = value),
+                  // onChanged: (value) => setState(() => getemail = value),
                 ),
               ),
               SizedBox(height: 22.0), // Add space between the fields
@@ -107,7 +113,7 @@ class _MySignupPageState extends State<MySignupPage> {
                           BorderRadius.circular(6.0), // Rounded corners
                     ),
                   ),
-                  onChanged: (value) => setState(() => getpassword = value),
+                  // onChanged: (value) => setState(() => getpassword = value),
                 ),
               ),
               SizedBox(height: 22.0), // Add space between the fields
@@ -116,7 +122,7 @@ class _MySignupPageState extends State<MySignupPage> {
                 children: [
                   Container(
                     child: ElevatedButton(
-                      onPressed:saveCredentials,
+                      onPressed:(){},
                       child: const Text('Register'),
                     ),
                   ),
@@ -135,6 +141,7 @@ class _MySignupPageState extends State<MySignupPage> {
           ),
         ),
       ),
+      
     );
   }
 }

@@ -1,10 +1,11 @@
-import 'dart:async';
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:spotify/dashboard.dart';
+
+
 import 'package:spotify/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:splachscreen/login.dart';
 
 void main() {
@@ -17,19 +18,12 @@ class Login extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Chat app',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyLoginPage(title: 'chat app'),
-    );
+    return MaterialApp();
   }
 }
 
 class MyLoginPage extends StatefulWidget {
-const MyLoginPage({super.key, required this.title});
+  const MyLoginPage({super.key, required this.title});
 
   final String title;
 
@@ -38,23 +32,43 @@ const MyLoginPage({super.key, required this.title});
 }
 
 class _MyloginPageState extends State<MyLoginPage> {
-  String getemail="";
-  String getpassword="";
-void getCredentials (){
-if(getemail == "admin@gmail.com" && getpassword =="123"){
-Navigator.push(context,MaterialPageRoute(builder: (a) => Dashboard()));
-}else{
-  print( "wrong credentials");
-}
-}
+  String getemail = "";
+  String getpassword = "";
+  @override
+  // void initState() async {
+  //   final SharedPreferences userData = await SharedPreferences.getInstance();
+  //   if (userData.containsKey('name')) {
+  //     Navigator.push(context, MaterialPageRoute(builder: (a) => Dashboard()));
+  //   }
+  //   super.initState();
+  // }
+  void initState() {
+    print("vdfvgdfgdfg");
+
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void getCredentials()  async {
+    final SharedPreferences userData = await SharedPreferences.getInstance();
+    String userEmail = userData.getString('email').toString();
+    String userPassword = userData.getString('password').toString();
+
+    if (getemail == userEmail && getpassword == userPassword) {
+      Navigator.push(context, MaterialPageRoute(builder: (a) => Dashboard()));
+    } else {
+      print("wrong credentials");
+    }
+  }
 
   @override
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: Center(
+       
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -68,7 +82,8 @@ Navigator.push(context,MaterialPageRoute(builder: (a) => Dashboard()));
                     hintText: "Email",
                     labelText: "Write your email",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6.0), // Rounded corners
+                      borderRadius:
+                          BorderRadius.circular(6.0), // Rounded corners
                     ),
                   ),
                   onChanged: (value) => setState(() => getemail = value),
@@ -84,7 +99,8 @@ Navigator.push(context,MaterialPageRoute(builder: (a) => Dashboard()));
                     hintText: "Password",
                     labelText: "Write your password",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6.0), // Rounded corners
+                      borderRadius:
+                          BorderRadius.circular(6.0), // Rounded corners
                     ),
                   ),
                   onChanged: (value) => setState(() => getpassword = value),
@@ -94,21 +110,27 @@ Navigator.push(context,MaterialPageRoute(builder: (a) => Dashboard()));
               Column(
                 children: [
                   Container(
-                    child:ElevatedButton(
-                onPressed: getCredentials,
-                child: const Text('Login'),
-              ),),
-                                 Container(
-                    child:ElevatedButton(
-                onPressed:(){ Navigator.push(context,MaterialPageRoute(builder: (a)=>Signup()));},
-                child: const Text('Need register'),
-              ),),
+                    child: ElevatedButton(
+                      onPressed: getCredentials,
+                      child: const Text('Login'),
+                    ),
+                  ),
+                  Container(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (a) => Signup()));
+                      },
+                      child: const Text('Need to be register'),
+                    ),
+                  ),
                 ],
               ) // Add space between the fields
             ],
           ),
         ),
-      ),
+        ),
+      
     );
   }
 }
